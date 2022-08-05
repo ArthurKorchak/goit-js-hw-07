@@ -13,12 +13,10 @@ function galleryGen(galleryItems) {
         return acc +=
             `<div class="gallery__item">
                 <a class="gallery__link" href="${original}">
-                    <img
-                        class="gallery__image"
-                        src="${preview}"
-                        data-source="${original}"
-                        alt="${description}"
-                    />
+                    <img class="gallery__image"
+                    src="${preview}"
+                    data-source="${original}"
+                    alt="${description}"/>
                 </a>
             </div>`
     }, '');
@@ -37,7 +35,16 @@ function modalOperations(event) {
         if (event.key === 'Escape') {
             instance.close();
             document.removeEventListener("keydown", handlePressEsc);
+            document.removeEventListener("click", handleClick);
+        };
+    };
+    const lightbox = document.querySelector(".basicLightbox");
+    const handleClick = (event) => {
+        if (event.target === lightbox) {
+                document.removeEventListener("keydown", handlePressEsc);
+                lightbox.removeEventListener("click", handleClick);
         };
     };
     document.addEventListener("keydown", handlePressEsc);  
+    lightbox.addEventListener("click", handleClick);
 };
