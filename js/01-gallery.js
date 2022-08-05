@@ -6,7 +6,7 @@ const modal = document.querySelector('template');
 
 galleryGen(galleryItems);
 
-trgForAdd.addEventListener('click', modalOperatorions);
+trgForAdd.addEventListener('click', modalOperations);
 
 function galleryGen(galleryItems) {
     const dataSet = galleryItems.reduce((acc, { preview, original, description }) => {
@@ -25,7 +25,7 @@ function galleryGen(galleryItems) {
     trgForAdd.innerHTML = dataSet;
 };
 
-function modalOperatorions(event) {
+function modalOperations(event) {
     event.preventDefault();
     const curEl = event.target.alt;
     if (event.target === event.currentTarget) {return};
@@ -40,4 +40,4 @@ function modalOperatorions(event) {
         };
     };
     document.addEventListener("keydown", handlePressEsc);  
-}
+};
