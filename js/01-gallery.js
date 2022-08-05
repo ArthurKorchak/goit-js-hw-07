@@ -2,7 +2,6 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 const trgForAdd = document.querySelector('.gallery');
-const modal = document.querySelector('template');
 
 galleryGen(galleryItems);
 
@@ -20,31 +19,21 @@ function galleryGen(galleryItems) {
                 </a>
             </div>`
     }, '');
-    trgForAdd.innerHTML = dataSet;
+    trgForAdd.innerHTML =  dataSet;
 };
 
 function modalOperations(event) {
     event.preventDefault();
-    const curEl = event.target.alt;
-    if (event.target === event.currentTarget) {return};
-    const bigImg = galleryItems.find(({ description }) => description === curEl ? true : false).original;
-    modal.innerHTML = `<div class="modal"><img src ="${bigImg}"></div>`;
-    const instance = basicLightbox.create(document.querySelector('template'));
-    instance.show();
-    const handlePressEsc = (event) => {
-        if (event.key === 'Escape') {
-            instance.close();
+    if (event.target === event.currentTarget) { return };
+    const bigImg = event.target.dataset.source;
+    const handlePressEsc = (event) => event.key === 'Escape' ? instance.close() : null;
+    const instance = basicLightbox.create((`<img src="${bigImg}">`), {
+        onShow: () => {
+            document.addEventListener("keydown", handlePressEsc);
+        },
+        onClose: () => {
             document.removeEventListener("keydown", handlePressEsc);
-            document.removeEventListener("click", handleClick);
-        };
-    };
-    const lightbox = document.querySelector(".basicLightbox");
-    const handleClick = (event) => {
-        if (event.target === lightbox) {
-                document.removeEventListener("keydown", handlePressEsc);
-                lightbox.removeEventListener("click", handleClick);
-        };
-    };
-    document.addEventListener("keydown", handlePressEsc);  
-    lightbox.addEventListener("click", handleClick);
+        },
+    });
+    instance.show();
 };
